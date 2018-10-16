@@ -1,5 +1,6 @@
-from KPC import KPC
 from inspect import isfunction
+from KPC import KPC
+
 
 class Rule:
 
@@ -28,26 +29,29 @@ class FSM:
         self.rules = []
         self.signal = None
         self.current_state = "s0"
-        #self.KPC = KPC()
+        self.KPC = KPC()
 
     def add_rule(self, rule):
+        """Adds a rule to the rule-list of fsm"""
         self.rules.append(rule)
 
     def get_next_signal(self):
         self.signal = input("input: ")
 
     def run_rules(self):
+        """Runs through the rule list and fires first matching"""
         for rule in self.rules:
             if rule.matching(self):
                 self.fire_rule(rule)
                 break
 
     def fire_rule(self, rule):
-        
+        """Calls the appropriate KPC method"""
         self.current_state = rule.state2
         print(rule.action)
 
     def main_loop(self):
+        """Continuously collects next signal from KPC and searches for matching rule"""
         while True:
             self.get_next_signal()
             self.run_rules()

@@ -22,7 +22,7 @@ class Keyboard:
         for row_pin in row_pins:
             GPIO.setup(row_pin, GPIO.OUT)
         for column_pin in column_pins:
-            GPIO.setup(column_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN))
+            GPIO.setup(column_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
         self.row_pins = row_pins
         self.column_pins = column_pins
