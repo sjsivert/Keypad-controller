@@ -1,5 +1,7 @@
 from FSM import *
 from KPC import *
+from led_board import *
+from keypad import *
 from proxy import *
 
 
@@ -14,7 +16,7 @@ def signal_is_any(signal): return True
 
 def main():
 
-    kpc = KPC(ProxyKeypad(), ProxyLedBoard())
+    kpc = KPC(Keyboard(), LedBoard())
     kpc.init_passcode_entry()
 
     fsm = FSM(kpc)
