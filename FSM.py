@@ -36,7 +36,7 @@ class FSM:
         self.rules.append(rule)
 
     def get_next_signal(self):
-        self.signal = input("input: ")
+        self.signal = KPC.get_next_signal()
 
     def run_rules(self):
         """Runs through the rule list and fires first matching"""
