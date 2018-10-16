@@ -1,19 +1,16 @@
-import keypad
-import led_board
-import FSM
+
+
 
 class KPC:
-    def __init__(self, keypad, fsm, led_board):
+    def __init__(self, keypad, led_board):
         self._keypad = keypad
-        self._fsm = fsm
         self._led_board = led_board
 
         # skriver assert for å fortelle pycharm typen til objektet
         # slik at vi får autocomplete :))
-        assert isinstance(self._fsm, FSM.FSM)
-        assert isinstance(self._led_board, led_board.LedBoard)
-        assert isinstance(self._keypad, keypad.Keyboard)
-        self._standard_passord = [1,2,3] # standard passord ved restart
+        #assert isinstance(self._led_board, led_board.LedBoard)
+        #assert isinstance(self._keypad, keypad.Keyboard)
+        self._standard_passord = ['1','2','3'] # standard passord ved restart
         self._password = self._standard_passord # passord i bruk
         self._password_accumulator = []
 
@@ -21,9 +18,9 @@ class KPC:
         self._led_board.power_up()
 
     def get_next_signal(self): # return override-signal or get next keypress from keypad
-        self._keypad.get_next()
+        return self._keypad.get_next()
 
-    def verify_login(self): # check user-entered password with correct password (in a file)
+    def verify_login(self, signal): # check user-entered password with correct password (in a file)
         '''
         n = lengden til satt passord.
         m = lengden på totalt antall signal sendt til password_accumulator
@@ -31,12 +28,13 @@ class KPC:
 
         return True or False
         '''
+        print(self._password_accumulator)
+        print(self._password)
         n = len(self._password)
         m = len(self._password_accumulator)
-        if n < m and self._password_accumulator[m-n:] == self._password:
-            self.reset_password_accumulator()
+        if n <= m and self._password_accumulator[m-n:] == self._password:
+            self.reset_password_accumulator(None)
             return True
-
         return False
 
     def validate_passcode_change(self): # check that newly-entered password is legal
@@ -59,20 +57,22 @@ class KPC:
        self._led_board.power_down()
 
     # -----FSM Methods-----
-    def reset_password_accumulator(self): # resets input accumulaor
+    def reset_password_accumulator(self, signal): # resets input accumulaor
         self._password_accumulator = []
 
     def append_next_password_digit(self, signal): # appends signal to password acuumulator
         assert isinstance(signal, str)
         self._password_accumulator.append(signal)
+        print(self._password_accumulator)
 
-    def verify_password(self):
+    def verify_password(self, signal):
         self.verify_login()
-    def reset_agent(self):
+
+    def reset_agent(self, signal):
         self.reset_password_accumulator()
         self._password = self._standard_passord
 
-    def fully_activate_agent(self):
+    def fully_activate_agent(self, signal):
         assert NotImplementedError
         # svare på om passwordet stemmer eller ikke
 

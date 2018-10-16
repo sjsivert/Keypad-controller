@@ -25,18 +25,18 @@ class Rule:
 
 class FSM:
 
-    def __init__(self):
+    def __init__(self, kpc):
         self.rules = []
         self.signal = None
         self.current_state = "s0"
-        self.KPC = KPC()
+        self.KPC = kpc
 
     def add_rule(self, rule):
         """Adds a rule to the rule-list of fsm"""
         self.rules.append(rule)
 
     def get_next_signal(self):
-        self.signal = KPC.get_next_signal()
+        self.signal = KPC.get_next_signal(self.KPC)
 
     def run_rules(self):
         """Runs through the rule list and fires first matching"""
@@ -49,6 +49,7 @@ class FSM:
         """Calls the appropriate KPC method"""
         self.current_state = rule.state2
         print(rule.action)
+        print(rule.action(self.KPC, self.signal))
 
     def main_loop(self):
         """Continuously collects next signal from KPC and searches for matching rule"""
