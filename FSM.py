@@ -46,10 +46,11 @@ class FSM:
                 break
 
     def fire_rule(self, rule):
-        """Calls the appropriate KPC method"""
-        self.current_state = rule.state2
+        """Calls the appropriate KPC method. self.current_state is changed based on response from KPC"""
         print(rule.action)
-        print(rule.action(self.KPC, self.signal))
+        agent_return = rule.action(self.KPC, self.signal)
+        if agent_return is None or agent_return is True:
+            self.current_state = rule.state2
 
     def main_loop(self):
         """Continuously collects next signal from KPC and searches for matching rule"""

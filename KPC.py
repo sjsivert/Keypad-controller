@@ -1,6 +1,4 @@
 
-
-
 class KPC:
     def __init__(self, keypad, led_board):
         self._keypad = keypad
