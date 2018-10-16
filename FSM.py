@@ -10,6 +10,8 @@ class Rule:
         self.action = action
 
     def matching(self, FSM):
+        """Checks if rule matches the context of FSM. That is if rule.trigger_signal matches FSM.signal
+        and rule.state1 matches FSM.current_state"""
         if isfunction(self.state1) and isfunction(self.trigger_signal):
             return self.state1(FSM.current_state) and self.trigger_signal(FSM.signal)
         elif isfunction(self.trigger_signal):
@@ -41,6 +43,7 @@ class FSM:
                 break
 
     def fire_rule(self, rule):
+        
         self.current_state = rule.state2
         print(rule.action)
 
