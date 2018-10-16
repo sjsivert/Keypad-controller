@@ -1,4 +1,4 @@
-#from *** import KPC
+from KPC import KPC
 from inspect import isfunction
 
 class Rule:
