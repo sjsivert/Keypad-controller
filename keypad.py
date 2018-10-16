@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 from time import time, sleep
 
+
 class Keyboard:
     key_dic = {
         (0, 0): "1",
@@ -16,13 +17,14 @@ class Keyboard:
         (3, 1): "0",
         (3, 2): "#",
         }
+
     def __init__(self, row_pins=[18, 23, 24, 25], column_pins=[17, 27, 22]):
         """ Set pins to right modes """
         GPIO.setmode(GPIO.BCM)
         for row_pin in row_pins:
             GPIO.setup(row_pin, GPIO.OUT)
         for column_pin in column_pins:
-            GPIO.setup(column_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN))
+            GPIO.setup(column_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
         self.row_pins = row_pins
         self.column_pins = column_pins
@@ -32,11 +34,11 @@ class Keyboard:
         start_time = time()
         while time() - start_time < 0.2:
             if GPIO.input(column_pin) == GPIO.LOW:
-                return False # The keypress lasted for less than 0.2 seconds
+                return False  # The keypress lasted for less than 0.2 seconds
         while True:
             if GPIO.input(column_pin) == GPIO.LOW:
-                sleep(0.1) # make sure the key is stabilized
-                return True # The keypress lasted for more than 0.2 seconds and the key is now released
+                sleep(0.1)  # make sure the key is stabilized
+                return True  # The keypress lasted for more than 0.2 seconds and the key is now released
 
     def do_polling(self):
         """
@@ -46,10 +48,10 @@ class Keyboard:
         """
         for i, row_pin in enumerate(self.row_pins):
             GPIO.output(row_pin, GPIO.HIGH)
-            for j, colum_pin in enumerate(self.column_pins):
+            for j, column_pin in enumerate(self.column_pins):
                 if GPIO.input(column_pin) == GPIO.HIGH:
-                    if check_if_keypress(column_pin):
-                        return (i,j)
+                    if self.check_if_keypress(column_pin):
+                        return (i, j)
             GPIO.output(row_pin, GPIO.LOW)
         return None
 
