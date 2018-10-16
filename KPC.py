@@ -24,24 +24,26 @@ class KPC:
         self._keypad.get_next()
 
     def verify_login(self): # check user-entered password with correct password (in a file)
-        # return true or false
-        return self._password == self._password_accumulator
-
-    def validate_passcode_change(self): # check that newly-entered password is legal
-        assert NotImplementedError
         '''
         n = lengden til satt passord.
         m = lengden på totalt antall signal sendt til password_accumulator
         sjekker om de n siste tallene i password_accumulator er lik passowrd
-        
+
         return True or False
         '''
         n = len(self._password)
         m = len(self._password_accumulator)
         if n < m and self._password_accumulator[m-n:] == self._password:
+            self.reset_password_accumulator()
             return True
 
         return False
+
+    def validate_passcode_change(self): # check that newly-entered password is legal
+        # går ut ifar at password_accumulator var tom, når passowrdet ble skrevet
+        self._password = self._password_accumulator
+
+
     # -----LedBoard Methods-----
     def light_one_led(self, led_id): # Call LED boards light_led method
         assert isinstance(self._led_board, led_board.LedBoard)
@@ -65,13 +67,13 @@ class KPC:
         self._password_accumulator.append(signal)
 
     def verify_password(self):
-        assert NotImplementedError
-
+        self.verify_login()
     def reset_agent(self):
         self.reset_password_accumulator()
         self._password = self._standard_passord
 
     def fully_activate_agent(self):
         assert NotImplementedError
+        # svare på om passwordet stemmer eller ikke
 
 
