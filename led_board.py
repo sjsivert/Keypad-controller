@@ -2,7 +2,8 @@ import RPi.GPIO as GPIO
 from time import sleep, time
 from random import randint
 
-class LedBoard():
+
+class LedBoard:
     """ A class for handling lightning of the leds in the arduino """
     pin_led_states = [
         (1, 0, -1), # 1
