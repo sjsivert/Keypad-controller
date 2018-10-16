@@ -1,7 +1,7 @@
 
 class KPC:
     def __init__(self):
-        pass
+        self._password = "123" # standard password
 
     def init_passcode_entry(self): # power up method
         pass
@@ -10,7 +10,9 @@ class KPC:
         pass
 
     def verify_login(self, pw): # check user-entered password with correct password (in a file)
-        pass
+        # return true or false
+        return pw == self._password
+
 
     def validate_passcode_change(self, pw): # check that newly-entered password is legal
         pass
