@@ -13,7 +13,7 @@ class ProxyLedBoard:
         print("Turning off leds")
 
     def light_led(self, led_number, seconds):
-        print("Turns on", led_number, "for", seconds, "seconds")
+        print("Turns on led", led_number, "for", seconds, "seconds")
 
     def flash_all_leds(self, seconds):
         print("Flashing all leds for", seconds, "seconds")
@@ -22,7 +22,6 @@ class ProxyLedBoard:
         print("Twinkle all leds for", seconds, "seconds")
 
     def random_blink(self, seconds):
-        """ Lights up random leds in sequence for the specified number of seconds """
         print("Lights up random leds for", seconds, "seconds")
 
     def power_up(self):
