@@ -18,10 +18,6 @@ class KPC:
         #--shutdown--
         self.shutdown_1st = False
 
-    def init_passcode_entry(self):
-        """Calls the LED board power up method."""
-        self.led_board.power_up()
-
     def get_next_signal(self):
         """Gets the next signal from keypad and returns this to the FSM. In case of a login attempt the method returns
         an override signal to determine whether the login was successful."""
@@ -29,7 +25,7 @@ class KPC:
             self.verify_attempt = False
             return self.verify_result
         else:
-            return self.keypad.get_next()
+            return self.keypad.get_next_signal()
 
     def verify_login(self, signal):
         """Checks if login is successful by comparing what is currently in the password accumulator and password.
@@ -47,6 +43,10 @@ class KPC:
 
 
     # -----LedBoard Methods-----
+    def start_up(self, signal):
+        self.led_board.power_up()
+        self.reset_password_accumulator(signal)
+    
     def select_led(self, led_id):
         """Selects a LED that is going to be lit up."""
         self.led_select = led_id
@@ -61,7 +61,7 @@ class KPC:
 
     def light_selected_led(self, signal):
         """Instructs the LED board to light the LED selected for the amount of time specified by previous methods."""
-        self.led_board.light_led(self.led_select-1, self.led_time)
+        self.led_board.light_led(int(self.led_select)-1, int(self.led_time))
         self.refresh_agent(signal)
 
     def flash_leds(self, seconds):
@@ -88,7 +88,7 @@ class KPC:
         """Calls flash_leds to indicate failure"""
         self.flash_leds(2)
 
-    def exit_action(self):
+    def exit_action(self, signal):
         """Calls the LED board power_down method."""
         self.led_board.power_down()
 
@@ -142,6 +142,6 @@ class KPC:
         """Confirmation of shutdown and calls indirectly LED board power_down method"""
         if self.shutdown_1st:
             self.shutdown_1st = False
-            self.exit_action()
+            self.exit_action(signal)
 
 

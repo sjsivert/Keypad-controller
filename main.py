@@ -17,11 +17,10 @@ def signal_is_any(signal): return True
 def main():
 
     kpc = KPC(Keyboard(), LedBoard())
-    kpc.init_passcode_entry()
 
     fsm = FSM(kpc)
 
-    rule_1 = Rule("s0", "s1", signal_is_any, KPC.reset_password_accumulator)
+    rule_1 = Rule("s0", "s1", signal_is_any, KPC.start_up)
     fsm.add_rule(rule_1)
     rule_2 = Rule("s1", "s1", signal_is_digit, KPC.append_next_password_digit)
     fsm.add_rule(rule_2)
