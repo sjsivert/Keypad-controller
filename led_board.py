@@ -66,5 +66,5 @@ class LedBoard:
         self.twinkle_all_leds(0.8)
 
     def power_down(self):
+        self.twinkle_all_leds(1.2)
         self.random_blink(1)
-        self.twinkle_all_leds(0.8)
