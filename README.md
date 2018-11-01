@@ -1,3 +1,3 @@
 # PLab2-ving-5
 
-![Keypad-controller](https://imgur.com/Qm5cw0l)
+![Keypad-controller](https://i.imgur.com/Qm5cw0l.jpg)
